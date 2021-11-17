@@ -6,5 +6,5 @@ If you use these scripts consider the idea of crediting me, or at least consider
 
 # Scripts list
 <b>Vector3FindTool</b> - Tool for find, copy, add and delete Vector3s<br />
-ChangeAllShaders - Select two shaders, the first one will be the one that will be searched in the scene, the second one will replace all materials that uses that shader in the scene<br />
-DownloadAndLoad - This script gives the possibility of automatically downloading and loading an FBX model at runtime on Unity<br />
+<b>ChangeAllShaders</b> - Select two shaders, the first one will be the one that will be searched in the scene, the second one will replace all materials that uses that shader in the scene<br />
+<b>DownloadAndLoad</b> - This script gives the possibility of automatically downloading and loading an FBX model at runtime on Unity<br />
