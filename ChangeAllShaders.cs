@@ -16,7 +16,7 @@ public class ChangeAllShaders : EditorWindow
     {
         GUILayout.Label("Base Settings", EditorStyles.boldLabel);
         sh = (Shader)EditorGUILayout.ObjectField(sh, typeof(Shader), true);
-        sh2 = (Shader)EditorGUILayout.ObjectField(sh, typeof(Shader), true);
+        sh2 = (Shader)EditorGUILayout.ObjectField(sh2, typeof(Shader), true);
         if(GUILayout.Button("Change Shaders!"))
         {
             GameObject[] SceneObjects = UnityEngine.Object.FindObjectsOfType<GameObject>();
