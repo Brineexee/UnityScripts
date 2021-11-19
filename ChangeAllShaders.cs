@@ -19,12 +19,14 @@ public class ChangeAllShaders : EditorWindow
         sh2 = (Shader)EditorGUILayout.ObjectField(sh, typeof(Shader), true);
         if(GUILayout.Button("Change Shaders!"))
         {
-            Renderer[] SceneObjects = UnityEngine.Object.FindObjectsOfType<Renderer>();
-            foreach(Renderer sceneObject in SceneObjects)
+            GameObject[] SceneObjects = UnityEngine.Object.FindObjectsOfType<GameObject>();
+            
+            foreach(GameObject sceneObject in SceneObjects)
             {
-                if(sceneObject != null && Renderer.sharedMaterial.shader == sh)
+                Renderer rend = sceneObject.GetComponent<Renderer>();
+                if(rend != null && rend.sharedMaterial.shader == sh)
                 {
-                    sceneObject.sharedMaterial.shader = sh2;
+                    rend.sharedMaterial.shader = sh2;
                 }
             }
         }
