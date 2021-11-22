@@ -26,21 +26,21 @@ public class ChangeAllShaders : EditorWindow
                 Renderer rend = sceneObject.GetComponent<Renderer>();
                 MeshRenderer msRend = sceneObject.GetComponent<MeshRenderer>();
                 SkinnedMeshRenderer msRend2 = sceneObject.GetComponent<SkinnedMeshRenderer>();
-                if(msRend2 != null && msRend2.material.shader == sh)
+                if(msRend2 != null && msRend2.sharedMaterial.shader == sh)
                 {
-                    for(int i = 0; i < msRend2.materials.Length; i++)
+                    for(int i = 0; i < msRend2.sharedMaterials.Length; i++)
                     {
-                        msRend2.materials[i].shader = sh2;
+                        msRend2.sharedMaterials[i].shader = sh2;
                     }
-                    msRend2.material.shader = sh2;
+                    msRend2.sharedMaterial.shader = sh2;
                 }
-                if(msRend != null && msRend.material.shader == sh)
+                if(msRend != null && msRend.sharedMaterial.shader == sh)
                 {
-                    for(int i = 0; i < msRend.materials.Length; i++)
+                    for(int i = 0; i < msRend.sharedMaterials.Length; i++)
                     {
-                        msRend.materials[i].shader = sh2;
+                        msRend.sharedMaterials[i].shader = sh2;
                     }
-                    msRend.material.shader = sh2;
+                    msRend.sharedMaterial.shader = sh2;
                 }
                 if(rend != null && rend.sharedMaterial.shader == sh)
                 {
