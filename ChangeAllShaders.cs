@@ -24,8 +24,30 @@ public class ChangeAllShaders : EditorWindow
             foreach(GameObject sceneObject in SceneObjects)
             {
                 Renderer rend = sceneObject.GetComponent<Renderer>();
+                MeshRenderer msRend = sceneObject.GetComponent<MeshRenderer>();
+                SkinnedMeshRenderer msRend2 = sceneObject.GetComponent<SkinnedMeshRenderer>();
+                if(msRend2 != null && msRend2.material.shader == sh)
+                {
+                    for(int i = 0; i < msRend2.materials.Length; i++)
+                    {
+                        msRend2.materials[i].shader = sh2;
+                    }
+                    msRend2.material.shader = sh2;
+                }
+                if(msRend != null && msRend.material.shader == sh)
+                {
+                    for(int i = 0; i < msRend.materials.Length; i++)
+                    {
+                        msRend.materials[i].shader = sh2;
+                    }
+                    msRend.material.shader = sh2;
+                }
                 if(rend != null && rend.sharedMaterial.shader == sh)
                 {
+                    for(int i = 0; i < rend.materials.Length; i++)
+                    {
+                        rend.materials[i].shader = sh2;
+                    }
                     rend.sharedMaterial.shader = sh2;
                 }
             }
