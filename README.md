@@ -1,10 +1,17 @@
-# UnityScripts
-Some scripts I made on Unity to make game development easier for some people
+# Unity Scripts Collection
 
-# Using these scripts?
-If you use these scripts consider crediting me, or at least consider the idea of not removing the first text line in the code
+This repository contains a collection of Unity scripts designed to simplify game development.
 
-# Scripts list
-<b>Vector3FindTool</b> - Tool for find, copy, add and delete Vector3s<br />
-<b>ChangeAllShaders</b> - Select two shaders, the first one will be searched in the scene's materials, the second one will replace all materials that uses the first shader in the scene<br />
-<b>DownloadAndLoad</b> - This script gives the possibility of automatically downloading and loading an FBX model at runtime on Unity<br />
+## Usage Guidelines
+**Update 09/04/25:** I don't mind anyone using these scripts. I gave them a small cleanup and tried to make them better. You're free to use them.
+
+## Script Descriptions
+
+### Vector3FindTool
+A handy tool for finding, copying, adding, and deleting Vector3 values in your scene.
+
+### ChangeAllShaders
+Select two shaders: the script searches through all scene materials for the first shader and replaces it with the second shader wherever it is used.
+
+## Contributions
+Feel free to fork this repository and contribute improvements or new scripts. Contributions are welcome!
