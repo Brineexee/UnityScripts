@@ -1,52 +1,61 @@
-﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-public class Vector3FindTool : UnityEditor.EditorWindow
+public class Vector3FindTool : EditorWindow
 {
-    Transform target;
-    Vector3 targetPos;
-    bool Spawned = false;
+    private Transform vectorObject;
+    private bool isSpawned;
 
-    [MenuItem("Tools/FindVector3")]
-    static void Init()
+    [MenuItem("Tools/Find Vector3")]
+    public static void ShowWindow()
     {
-        Vector3FindTool window = (Vector3FindTool)EditorWindow.GetWindow(typeof(Vector3FindTool), true, "Find Vector3 from Transform");
-        window.Show();
+        GetWindow<Vector3FindTool>("Find Vector3 from Transform");
     }
 
-    void OnGUI()
+    private void OnGUI()
     {
-        GUILayout.Label("Base Settings", EditorStyles.boldLabel);
-        EditorGUILayout.BeginHorizontal();
-        if(GUILayout.Button("Spawn Vector Object")){
-            switch(Spawned){
-                case true:
-                DestroyImmediate(target.gameObject);
-                target = new GameObject("Vector3Search").transform;
-                break;
-                case false:
-                target = new GameObject("Vector3Search").transform;
-                Spawned = true;
-                break;
-            }
-        }
-        if(target != null){
-        if(GUILayout.Button("Destroy Vector Object")){
-            DestroyImmediate(target.gameObject);
-            Spawned = false;
-        }
-        if(GUILayout.Button("Copy Vectors")){
-            GUIUtility.systemCopyBuffer = "X: " + target.position.x + " Y: " + target.position.y + " Z: " + target.position.z;
-        }
-        }
-        EditorGUILayout.EndHorizontal();
+        GUILayout.Label("Vector3 Tool", EditorStyles.boldLabel);
+
         EditorGUILayout.BeginHorizontal();
 
-        if(target != null){
-        target.position = EditorGUILayout.Vector3Field("Position:", target.position);
+        if (GUILayout.Button("Spawn Vector Object"))
+        {
+            ResetVectorObject();
         }
+
+        if (vectorObject != null)
+        {
+            if (GUILayout.Button("Destroy Vector Object"))
+            {
+                DestroyImmediate(vectorObject.gameObject);
+                vectorObject = null;
+                isSpawned = false;
+            }
+
+            if (GUILayout.Button("Copy Vectors"))
+            {
+                Vector3 pos = vectorObject.position;
+                GUIUtility.systemCopyBuffer = $"X: {pos.x} Y: {pos.y} Z: {pos.z}";
+            }
+        }
+
         EditorGUILayout.EndHorizontal();
+
+        if (vectorObject != null)
+        {
+            vectorObject.position = EditorGUILayout.Vector3Field("Position", vectorObject.position);
+        }
+    }
+
+    private void ResetVectorObject()
+    {
+        if (isSpawned && vectorObject != null)
+        {
+            DestroyImmediate(vectorObject.gameObject);
+        }
+
+        GameObject newObj = new GameObject("Vector3Search");
+        vectorObject = newObj.transform;
+        isSpawned = true;
     }
 }
