@@ -3,54 +3,51 @@ using UnityEngine;
 
 public class ChangeAllShaders : EditorWindow
 {
-    Shader sh;
-    Shader sh2;
+    private Shader shaderToFind;
+    private Shader shaderReplacement;
 
     [MenuItem("Tools/Change All Shaders")]
     public static void ShowWindow()
     {
-        EditorWindow.GetWindow(typeof(ChangeAllShaders));
+        GetWindow<ChangeAllShaders>("Change All Shaders");
     }
-    
-    void OnGUI()
+
+    private void OnGUI()
     {
         GUILayout.Label("Base Settings", EditorStyles.boldLabel);
-        sh = (Shader)EditorGUILayout.ObjectField(sh, typeof(Shader), true);
-        sh2 = (Shader)EditorGUILayout.ObjectField(sh2, typeof(Shader), true);
-        if(GUILayout.Button("Change Shaders!"))
+
+        shaderToFind = (Shader)EditorGUILayout.ObjectField("Shader To Find:", shaderToFind, typeof(Shader), false);
+        shaderReplacement = (Shader)EditorGUILayout.ObjectField("Shader Replacement:", shaderReplacement, typeof(Shader), false);
+
+        if (GUILayout.Button("Change Shaders!"))
         {
-            GameObject[] SceneObjects = UnityEngine.Object.FindObjectsOfType<GameObject>();
-            
-            foreach(GameObject sceneObject in SceneObjects)
+            if (shaderToFind == null || shaderReplacement == null) return;
+
+            Renderer[] renderers = Object.FindObjectsOfType<Renderer>();
+            int changedCount = 0;
+
+            foreach (Renderer renderer in renderers)
             {
-                Renderer rend = sceneObject.GetComponent<Renderer>();
-                MeshRenderer msRend = sceneObject.GetComponent<MeshRenderer>();
-                SkinnedMeshRenderer msRend2 = sceneObject.GetComponent<SkinnedMeshRenderer>();
-                if(msRend2 != null && msRend2.sharedMaterial.shader == sh)
+                bool updated = false;
+                Material[] materials = renderer.sharedMaterials;
+
+                for (int i = 0; i < materials.Length; i++)
                 {
-                    for(int i = 0; i < msRend2.sharedMaterials.Length; i++)
+                    Material mat = materials[i];
+                    if (mat != null && mat.shader == shaderToFind)
                     {
-                        msRend2.sharedMaterials[i].shader = sh2;
+                        mat.shader = shaderReplacement;
+                        updated = true;
+                        changedCount++;
                     }
-                    msRend2.sharedMaterial.shader = sh2;
                 }
-                if(msRend != null && msRend.sharedMaterial.shader == sh)
+
+                if (updated)
                 {
-                    for(int i = 0; i < msRend.sharedMaterials.Length; i++)
-                    {
-                        msRend.sharedMaterials[i].shader = sh2;
-                    }
-                    msRend.sharedMaterial.shader = sh2;
-                }
-                if(rend != null && rend.sharedMaterial.shader == sh)
-                {
-                    for(int i = 0; i < rend.materials.Length; i++)
-                    {
-                        rend.materials[i].shader = sh2;
-                    }
-                    rend.sharedMaterial.shader = sh2;
+                    EditorUtility.SetDirty(renderer);
                 }
             }
+            Debug.Log($"Changed shaders in {changedCount} material/s in {renderers.Length} renderers.");
         }
     }
 }
